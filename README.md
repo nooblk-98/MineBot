@@ -57,6 +57,10 @@ MineBot/
     in chat — from the server console/RCON run `say !setfarmhome` (token = `home.setHomeTrigger`).
     The bot will `/sethome farm` at its current location. Teleport it first (e.g. RCON
     `tp NoobLk_AFK <x> <y> <z>`), confirm it landed, *then* send the trigger.
+- **Survival (auto-eat + anti-death):** When hunger drops below `survival.foodThreshold`, the bot
+  eats the best food **in its inventory** — so stock it with food (e.g. `/give NoobLk_AFK cooked_beef 64`),
+  otherwise it logs a warning and can still starve. Anti-AFK jumping drains hunger over time. On death
+  it auto-respawns and runs `/home` again to get back to the farm.
 - **Keeping chunks loaded:** Simply staying online near the farm keeps its chunks loaded on
   most servers. The bot homes to the farm on every login, so it's always in position.
 - **24/7 running (Docker — recommended):** On any always-on machine with Docker:
