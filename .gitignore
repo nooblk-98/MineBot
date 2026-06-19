@@ -1,0 +1,14 @@
+node_modules/
+*.log
+bot.log
+
+# Real config holds the AuthMe password — keep it out of git.
+config.json
+
+# Env files (may hold secrets)
+.env
+.env.local
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db

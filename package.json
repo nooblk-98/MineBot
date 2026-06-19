@@ -1,0 +1,14 @@
+{
+  "name": "minebot",
+  "version": "1.0.0",
+  "description": "24/7 AFK Minecraft bot to keep farms active (Java, offline-mode, AuthMe-aware)",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "minecraft-data": "^3.111.0",
+    "mineflayer": "^4.37.1"
+  }
+}

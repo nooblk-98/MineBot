@@ -1,0 +1,30 @@
+{
+  "host": "202.124.164.163",
+  "port": 25565,
+  "version": "1.20.1",
+
+  "username": "NoobLk_AFK",
+  "authmePassword": "",
+
+  "antiAfk": {
+    "enabled": true,
+    "jump": true,
+    "swingArm": true,
+    "lookAround": true,
+    "sneakToggle": false,
+    "smallWalk": true,
+    "intervalSeconds": 30
+  },
+
+  "reconnect": {
+    "enabled": true,
+    "delaySeconds": 15
+  },
+
+  "home": {
+    "name": "farm",
+    "teleportOnLogin": true,
+    "teleportDelaySeconds": 4,
+    "setHomeTrigger": "!setfarmhome"
+  }
+}

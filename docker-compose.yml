@@ -1,0 +1,22 @@
+services:
+  minebot:
+    build: .
+    image: minebot:latest
+    container_name: minebot
+    restart: unless-stopped
+
+    # Real config (with the AuthMe password) lives on the host, never in git.
+    # Copy config.example.json -> config.json and fill in authmePassword.
+    volumes:
+      - ./config.json:/app/config.json:ro
+
+    # Alternatively (or additionally) override secrets via environment:
+    # environment:
+    #   MC_PASSWORD: "your-authme-password"
+
+    # Keep logs sane
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
