@@ -5,12 +5,12 @@ services:
     container_name: minebot
     restart: unless-stopped
 
-    # Real config (with the AuthMe password) lives on the host, never in git.
-    # Copy config.example.json -> config.json and fill in authmePassword.
-    volumes:
-      - ./config.json:/app/config.json:ro
+    # config.json is baked into the image. To tweak settings without rebuilding,
+    # uncomment this to mount your edited config from the host:
+    # volumes:
+    #   - ./config.json:/app/config.json:ro
 
-    # Alternatively (or additionally) override secrets via environment:
+    # Or override individual values via environment:
     # environment:
     #   MC_PASSWORD: "your-authme-password"
 

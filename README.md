@@ -4,6 +4,24 @@ A Mineflayer bot that stays logged into a **Java, offline-mode (cracked)** serve
 keep your farms loaded and ticking. Handles **AuthMe** login, **anti-AFK** movement,
 and **auto-reconnect**.
 
+## Project structure
+
+```
+MineBot/
+├── src/
+│   ├── index.js      # entry point
+│   ├── bot.js        # connection + lifecycle wiring
+│   ├── auth.js       # AuthMe login/register
+│   ├── home.js       # DonutHomes /home + /sethome trigger
+│   ├── antiAfk.js    # anti-AFK movement loop
+│   ├── config.js     # config loader + env overrides
+│   └── logger.js     # timestamped logging
+├── config.json       # active settings (incl. AuthMe password)
+├── config.example.json
+├── Dockerfile
+└── docker-compose.yml
+```
+
 ## Setup
 
 1. Install dependencies:
@@ -44,13 +62,12 @@ and **auto-reconnect**.
 - **24/7 running (Docker — recommended):** On any always-on machine with Docker:
   ```
   git clone <this-private-repo> minebot && cd minebot
-  cp config.example.json config.json     # then edit config.json: set authmePassword
   docker compose up -d                    # build + run, auto-restarts on crash/reboot
   docker compose logs -f minebot          # watch it connect
   ```
-  The real `config.json` (with your password) is git-ignored and mounted into the container at
-  runtime, so the secret never goes into the image or the repo. You can also pass the password
-  via the `MC_PASSWORD` env var (see `docker-compose.yml`).
+  `config.json` is included in this private repo, so it works out of the box. To change settings
+  without rebuilding, edit `config.json` and either uncomment the volume mount in
+  `docker-compose.yml` or override values with the `MC_*` env vars.
 - **24/7 running (PM2 alternative):** On Windows/Linux without Docker:
   ```
   npm install -g pm2

@@ -7,11 +7,11 @@ WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm install --omit=dev
 
-# App source + example config (real config.json is mounted at runtime)
-COPY index.js ./
-COPY config.example.json ./
+# App source + config files
+COPY src ./src
+COPY config.json config.example.json ./
 
 # Run as the built-in non-root user
 USER node
 
-CMD ["node", "index.js"]
+CMD ["node", "src/index.js"]
