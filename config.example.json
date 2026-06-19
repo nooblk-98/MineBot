@@ -26,5 +26,12 @@
     "teleportOnLogin": true,
     "teleportDelaySeconds": 4,
     "setHomeTrigger": "!setfarmhome"
+  },
+
+  "survival": {
+    "autoEat": true,
+    "foodThreshold": 18,
+    "checkIntervalSeconds": 10,
+    "returnHomeOnDeath": true
   }
 }
