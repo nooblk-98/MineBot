@@ -40,7 +40,7 @@ export function startSleep(bot, config) {
     } catch (e) {
       // Common, expected rejections: not night yet, monsters nearby, bed
       // occupied/obstructed, or briefly out of reach. Only surface the rest.
-      if (!/can only sleep at night|not night|too far|cant click the bed|occupied|monster/i.test(e.message)) {
+      if (!/can only sleep at night|not night|too far|cant click the bed|occupied|monster|not sleeping/i.test(e.message)) {
         log(`Sleep failed: ${e.message}`);
       }
     } finally {
