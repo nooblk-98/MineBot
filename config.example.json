@@ -39,5 +39,11 @@
     "enabled": true,
     "searchRadius": 16,
     "checkIntervalSeconds": 10
+  },
+
+  "restock": {
+    "enabled": true,
+    "searchRadius": 16,
+    "targetFoodCount": 64
   }
 }

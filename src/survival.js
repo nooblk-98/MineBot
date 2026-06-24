@@ -1,34 +1,47 @@
 import { log } from './logger.js';
 import { teleportHome } from './home.js';
+import { createFoodRestock } from './restock.js';
 
 // Keeps the bot alive over long unattended sessions:
 //  - auto-eats when hunger drops below a threshold (needs food in inventory)
 //  - respawns and returns home if it dies
 export function startSurvival(bot, config) {
   const cfg = config.survival || {};
-  if (cfg.autoEat !== false) startAutoEat(bot, cfg);
+  if (cfg.autoEat !== false) startAutoEat(bot, cfg, config);
   if (cfg.returnHomeOnDeath !== false) handleDeath(bot, config);
 }
 
-function startAutoEat(bot, cfg) {
+function startAutoEat(bot, cfg, config) {
   const threshold = cfg.foodThreshold ?? 18;
+  const restock = createFoodRestock(bot, config);
   let eating = false;
   let warnedNoFood = false;
+
+  function bestFood() {
+    const foods = bot.registry.foodsByName || {};
+    // Pick the food restoring the most hunger to minimise eating frequency.
+    return bot.inventory
+      .items()
+      .filter((i) => foods[i.name])
+      .sort((a, b) => (foods[b.name].foodPoints || 0) - (foods[a.name].foodPoints || 0))[0];
+  }
 
   async function tryEat() {
     if (eating || bot.food === undefined || bot.food > threshold) return;
 
-    const foods = bot.registry.foodsByName || {};
-    // Pick the food restoring the most hunger to minimise eating frequency.
-    const food = bot.inventory
-      .items()
-      .filter((i) => foods[i.name])
-      .sort((a, b) => (foods[b.name].foodPoints || 0) - (foods[a.name].foodPoints || 0))[0];
+    let food = bestFood();
+
+    if (!food) {
+      // Out of food — try pulling more from a nearby chest before giving up.
+      if (config.restock?.enabled !== false && (await restock())) {
+        food = bestFood();
+      }
+    }
 
     if (!food) {
       if (!warnedNoFood) {
         warnedNoFood = true;
-        log(`Hungry (food=${bot.food}) but no food in inventory! Give the bot food (e.g. /give ${bot.username} cooked_beef 64).`);
+        log(`Hungry (food=${bot.food}) but no food in inventory or nearby chest! Give the bot food (e.g. /give ${bot.username} cooked_beef 64).`);
       }
       return;
     }
