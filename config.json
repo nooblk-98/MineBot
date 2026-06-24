@@ -33,5 +33,11 @@
     "foodThreshold": 18,
     "checkIntervalSeconds": 10,
     "returnHomeOnDeath": true
+  },
+
+  "sleep": {
+    "enabled": true,
+    "searchRadius": 16,
+    "checkIntervalSeconds": 10
   }
 }

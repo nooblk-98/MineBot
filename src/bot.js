@@ -5,6 +5,7 @@ import { startAntiAfk, stopAntiAfk, isAntiAfkRunning } from './antiAfk.js';
 import { teleportHome, handleHomeTrigger } from './home.js';
 import { createAuthHandler } from './auth.js';
 import { startSurvival } from './survival.js';
+import { startSleep } from './sleep.js';
 
 export function startBot() {
   const bot = mineflayer.createBot({
@@ -20,6 +21,7 @@ export function startBot() {
     teleportHome(bot, config);
     startAntiAfk(bot, config);
     startSurvival(bot, config);
+    startSleep(bot, config);
   });
 
   bot.on('messagestr', (message) => {
