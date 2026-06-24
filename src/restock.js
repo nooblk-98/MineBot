@@ -1,4 +1,6 @@
 import { log } from './logger.js';
+import { gotoNear } from './nav.js';
+import { pauseAntiAfk, resumeAntiAfk } from './antiAfk.js';
 
 // Pulls food out of a nearby chest when the bot runs out.
 // Core mineflayer only (bot.findBlock + bot.openContainer) — no plugins.
@@ -19,6 +21,7 @@ export function createFoodRestock(bot, config) {
   async function restock() {
     if (busy || hasFood()) return false;
     busy = true;
+    pauseAntiAfk();
     try {
       const chestBlock = bot.findBlock({
         matching: (b) => b.name === 'chest' || b.name === 'barrel' || b.name === 'trapped_chest',
@@ -28,6 +31,9 @@ export function createFoodRestock(bot, config) {
         log(`Out of food and no chest within ${searchRadius} blocks.`);
         return false;
       }
+
+      // Walk adjacent to the chest — openContainer needs it within reach.
+      await gotoNear(bot, chestBlock, 2);
 
       const chest = await bot.openContainer(chestBlock);
       try {
@@ -63,6 +69,7 @@ export function createFoodRestock(bot, config) {
       log(`Restock failed: ${e.message}`);
       return false;
     } finally {
+      resumeAntiAfk();
       busy = false;
     }
   }

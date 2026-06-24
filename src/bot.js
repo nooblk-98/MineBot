@@ -6,6 +6,7 @@ import { teleportHome, handleHomeTrigger } from './home.js';
 import { createAuthHandler } from './auth.js';
 import { startSurvival } from './survival.js';
 import { startSleep } from './sleep.js';
+import { installPathfinder } from './nav.js';
 
 export function startBot() {
   const bot = mineflayer.createBot({
@@ -16,6 +17,8 @@ export function startBot() {
     version: config.version || false,
     checkTimeoutInterval: 60 * 1000,
   });
+
+  installPathfinder(bot);
 
   const auth = createAuthHandler(bot, config, () => {
     teleportHome(bot, config);

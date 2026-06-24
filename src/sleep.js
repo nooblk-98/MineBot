@@ -1,4 +1,6 @@
 import { log } from './logger.js';
+import { gotoNear } from './nav.js';
+import { pauseAntiAfk, resumeAntiAfk } from './antiAfk.js';
 
 // Auto-sleep: when night falls (or a thunderstorm hits), find a nearby bed and
 // sleep in it. Mineflayer only lets you sleep when the server allows it, so we
@@ -29,16 +31,20 @@ export function startSleep(bot, config) {
     if (!bed) return; // no bed in range; antiAfk keeps us alive instead
 
     busy = true;
+    pauseAntiAfk();
     try {
+      // Walk adjacent to the bed — interaction range is only ~3 blocks.
+      await gotoNear(bot, bed, 2);
       await bot.sleep(bed);
       log('Sleeping through the night.');
     } catch (e) {
-      // Common, expected rejections: "it's not night", monsters nearby,
-      // bed occupied/obstructed. Only surface unexpected ones.
-      if (!/can only sleep at night|too far|occupied|monster/i.test(e.message)) {
+      // Common, expected rejections: not night yet, monsters nearby, bed
+      // occupied/obstructed, or briefly out of reach. Only surface the rest.
+      if (!/can only sleep at night|not night|too far|cant click the bed|occupied|monster/i.test(e.message)) {
         log(`Sleep failed: ${e.message}`);
       }
     } finally {
+      resumeAntiAfk();
       busy = false;
     }
   }

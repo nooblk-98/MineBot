@@ -1,6 +1,17 @@
 import { log } from './logger.js';
 
 let timer = null;
+let paused = false;
+
+// Lets other modules (sleep/restock navigation) suspend the random movement
+// so it doesn't fight the pathfinder's control states.
+export function pauseAntiAfk() {
+  paused = true;
+}
+
+export function resumeAntiAfk() {
+  paused = false;
+}
 
 export function startAntiAfk(bot, config) {
   const cfg = config.antiAfk;
@@ -8,6 +19,7 @@ export function startAntiAfk(bot, config) {
   stopAntiAfk();
 
   timer = setInterval(() => {
+    if (paused) return;
     try {
       if (cfg.lookAround) {
         const yaw = Math.random() * Math.PI * 2;
