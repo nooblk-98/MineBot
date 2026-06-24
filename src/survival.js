@@ -14,6 +14,9 @@ export function startSurvival(bot, config) {
 function startAutoEat(bot, cfg, config) {
   const threshold = cfg.foodThreshold ?? 18;
   const restock = createFoodRestock(bot, config);
+  // Wait for the /home teleport + chunk load to settle before acting, so the
+  // first hungry tick doesn't fire restock before the chest is in range.
+  const readyAt = Date.now() + (cfg.startupGraceSeconds ?? 12) * 1000;
   let eating = false;
   let warnedNoFood = false;
 
@@ -28,6 +31,7 @@ function startAutoEat(bot, cfg, config) {
 
   async function tryEat() {
     if (eating || bot.food === undefined || bot.food > threshold) return;
+    if (Date.now() < readyAt) return; // still settling after login/teleport
 
     let food = bestFood();
 

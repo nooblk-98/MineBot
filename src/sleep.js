@@ -33,8 +33,15 @@ export function startSleep(bot, config) {
     busy = true;
     pauseAntiAfk();
     try {
-      // Walk adjacent to the bed — interaction range is only ~3 blocks.
-      await gotoNear(bot, bed, 2);
+      // If already within reach, skip pathfinding; else walk to the bed.
+      if (bot.entity.position.distanceTo(bed.position) > 3) {
+        await gotoNear(bot, bed, 2);
+      }
+      const dist = bot.entity.position.distanceTo(bed.position);
+      if (dist > 4.5) {
+        log(`Bed found but couldn't reach it (dist=${dist.toFixed(1)}, bed at ${bed.position}).`);
+        return;
+      }
       await bot.sleep(bed);
       log('Sleeping through the night.');
     } catch (e) {

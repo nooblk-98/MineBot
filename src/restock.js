@@ -32,10 +32,14 @@ export function createFoodRestock(bot, config) {
         return false;
       }
 
-      // Walk adjacent to the chest — openContainer needs it within reach.
-      const arrived = await gotoNear(bot, chestBlock, 2);
-      if (!arrived || bot.entity.position.distanceTo(chestBlock.position) > 4) {
-        log('Could not get within reach of the chest.');
+      // If already within reach, skip pathfinding (it misbehaves when the
+      // goal is already satisfied). Otherwise walk adjacent to the chest.
+      if (bot.entity.position.distanceTo(chestBlock.position) > 3) {
+        await gotoNear(bot, chestBlock, 3);
+      }
+      const dist = bot.entity.position.distanceTo(chestBlock.position);
+      if (dist > 4.5) {
+        log(`Could not get within reach of the chest (dist=${dist.toFixed(1)}, chest at ${chestBlock.position}).`);
         return false;
       }
 

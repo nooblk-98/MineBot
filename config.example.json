@@ -32,6 +32,7 @@
     "autoEat": true,
     "foodThreshold": 18,
     "checkIntervalSeconds": 10,
+    "startupGraceSeconds": 12,
     "returnHomeOnDeath": true
   },
 
