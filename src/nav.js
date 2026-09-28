@@ -45,7 +45,7 @@ export function gotoNear(bot, block, range = 2) {
       navigating = false;
     }
   });
-  // Keep the chain alive even if this run rejects (it won't — we catch above).
+  // Keep the chain alive even if this run rejects (it won't; we catch above).
   navChain = run.catch(() => {});
   return run;
 }

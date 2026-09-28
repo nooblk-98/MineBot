@@ -36,7 +36,7 @@ function startAutoEat(bot, cfg, config) {
     let food = bestFood();
 
     if (!food) {
-      // Out of food — try pulling more from a nearby chest before giving up.
+      // Out of food, try pulling more from a nearby chest before giving up.
       if (config.restock?.enabled !== false && (await restock())) {
         food = bestFood();
       }
@@ -74,7 +74,7 @@ function handleDeath(bot, config) {
 
   bot.on('death', () => {
     died = true;
-    log('Bot died — respawning...');
+    log('Bot died, respawning...');
     // Explicit respawn (client_command actionId 0) in case auto-respawn is off.
     setTimeout(() => {
       try {
@@ -88,7 +88,7 @@ function handleDeath(bot, config) {
   bot.on('spawn', () => {
     if (!died) return; // ignore the initial login spawn
     died = false;
-    log('Respawned — returning to farm home.');
+    log('Respawned, returning to farm home.');
     teleportHome(bot, config);
   });
 }

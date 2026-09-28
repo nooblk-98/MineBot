@@ -29,7 +29,7 @@ export function createAuthHandler(bot, config, onSuccess) {
     onSuccess();
   }
 
-  // Called when auth confirmation never arrives — proceed anyway.
+  // Called when auth confirmation never arrives, proceed anyway.
   function forceProceed() {
     if (done) return;
     done = true;

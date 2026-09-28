@@ -1,4 +1,4 @@
-# MineBot — 24/7 AFK farm bot (Mineflayer)
+# MineBot: 24/7 AFK farm bot (Mineflayer)
 FROM node:24-alpine
 
 WORKDIR /app

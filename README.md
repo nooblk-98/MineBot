@@ -12,29 +12,29 @@
 
 </div>
 
-MineBot is a [Mineflayer](https://github.com/PrismarineJS/mineflayer) bot built for **Java Edition, offline-mode servers** running [AuthMe](https://www.spigotmc.org/resources/authmereloaded.6269/). It logs in, teleports to your farm, and stays there indefinitely — eating, sleeping, restocking food, and reconnecting on its own so the chunks around your farm never unload.
+MineBot is a [Mineflayer](https://github.com/PrismarineJS/mineflayer) bot built for **Java Edition, offline-mode servers** running [AuthMe](https://www.spigotmc.org/resources/authmereloaded.6269/). It logs in, teleports to your farm, and stays there indefinitely: eating, sleeping, restocking food, and reconnecting on its own so the chunks around your farm never unload.
 
 > [!WARNING]
 > Many servers forbid AFK or macro bots. Only run MineBot on servers you own or where bots are explicitly allowed, or you risk being banned.
 
 ## Features
 
-- **AuthMe login** — sends `/login` on join, and `/register` automatically for new accounts.
-- **Home teleport** — runs `/home <name>` after every login and respawn, so the bot is always at the farm.
-- **Anti-AFK** — periodic jumping, arm swings, looking around and small steps to avoid idle kicks.
-- **Auto-eat** — eats the most filling food in its inventory when hunger drops below a threshold.
-- **Food restock** — pulls food from a nearby chest, barrel or trapped chest when it runs out.
-- **Auto-sleep** — walks to a nearby bed and sleeps at night or during thunderstorms.
-- **Death recovery** — respawns and returns home automatically.
-- **Auto-reconnect** — rejoins after kicks, crashes or server restarts.
-- **Safe pathfinding** — uses [mineflayer-pathfinder](https://github.com/PrismarineJS/mineflayer-pathfinder) with digging disabled, so it never breaks your farm.
-- **Docker-ready** — one command to run it as an always-on service.
+- **AuthMe login**: sends `/login` on join, and `/register` automatically for new accounts.
+- **Home teleport**: runs `/home <name>` after every login and respawn, so the bot is always at the farm.
+- **Anti-AFK**: periodic jumping, arm swings, looking around and small steps to avoid idle kicks.
+- **Auto-eat**: eats the most filling food in its inventory when hunger drops below a threshold.
+- **Food restock**: pulls food from a nearby chest, barrel or trapped chest when it runs out.
+- **Auto-sleep**: walks to a nearby bed and sleeps at night or during thunderstorms.
+- **Death recovery**: respawns and returns home automatically.
+- **Auto-reconnect**: rejoins after kicks, crashes or server restarts.
+- **Safe pathfinding**: uses [mineflayer-pathfinder](https://github.com/PrismarineJS/mineflayer-pathfinder) with digging disabled, so it never breaks your farm.
+- **Docker-ready**: one command to run it as an always-on service.
 
 ## Getting started
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org) (a recent LTS; the Docker image uses Node 24) — or [Docker](https://www.docker.com)
+- [Node.js](https://nodejs.org) (a recent LTS; the Docker image uses Node 24) or [Docker](https://www.docker.com)
 - A Java Edition server in **offline mode** with an AuthMe-style login
 - Optional: a homes plugin providing `/home` and `/sethome` (e.g. DonutHomes)
 
@@ -59,7 +59,7 @@ npm start
 ```
 
 > [!TIP]
-> Keep `config.json` out of version control — it contains your AuthMe password. If `config.json` is missing, MineBot falls back to `config.example.json`.
+> Keep `config.json` out of version control because it contains your AuthMe password. If `config.json` is missing, MineBot falls back to `config.example.json`.
 
 ## Configuration
 
@@ -67,9 +67,9 @@ All settings live in `config.json`. The main options are:
 
 | Key | Description | Default |
 | --- | --- | --- |
-| `host` / `port` | Server address | — / `25565` |
+| `host` / `port` | Server address | `25565` |
 | `version` | Client protocol version (`false` to auto-detect) | `"1.20.1"` |
-| `username` | Bot account name | — |
+| `username` | Bot account name | |
 | `authmePassword` | Password used for `/login` and `/register` | `""` |
 | `antiAfk.intervalSeconds` | Delay between anti-AFK actions (toggle `jump`, `swingArm`, `lookAround`, `sneakToggle`, `smallWalk` individually) | `30` |
 | `reconnect.enabled` / `delaySeconds` | Rejoin after disconnect, and how long to wait | `true` / `15` |
@@ -85,7 +85,7 @@ All settings live in `config.json`. The main options are:
 
 ### Environment overrides
 
-Connection settings can be overridden without editing the file — handy for containers:
+Connection settings can be overridden without editing the file, which is handy for containers:
 
 | Variable | Overrides |
 | --- | --- |

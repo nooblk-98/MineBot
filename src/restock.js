@@ -3,7 +3,7 @@ import { gotoNear } from './nav.js';
 import { pauseAntiAfk, resumeAntiAfk } from './antiAfk.js';
 
 // Pulls food out of a nearby chest when the bot runs out.
-// Core mineflayer only (bot.findBlock + bot.openContainer) — no plugins.
+// Core mineflayer only (bot.findBlock + bot.openContainer), no plugins.
 //
 // Usage: const restock = createFoodRestock(bot, config);
 //        await restock();  // returns true if it withdrew any food

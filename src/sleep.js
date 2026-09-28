@@ -56,7 +56,7 @@ export function startSleep(bot, config) {
     }
   }
 
-  bot.on('wake', () => log('Woke up — good morning.'));
+  bot.on('wake', () => log('Woke up, good morning.'));
 
   const interval = setInterval(trySleep, intervalMs);
   bot.once('end', () => clearInterval(interval));
